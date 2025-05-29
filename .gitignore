@@ -1,3 +1,82 @@
+# Dependencies
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
+/venv/
+/env/
+/ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Testing
+/frontend/coverage
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+
+# Production & Build
+/frontend/build
+/frontend/dist
+/backend/build
+/backend/dist
+*.egg-info/
+*.egg
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+logs/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Cache and Temporary files
+.eslintcache
+.npm
+*.tsbuildinfo
+/frontend/.cache
+/frontend/.parcel-cache
+.cache/
+__pycache__/
+.pytest_cache/
+
+# System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Database
+*.db
+*.sqlite3
+*.sqlite
+
+# Misc
+/frontend/.next
+/frontend/out
+/frontend/.nuxt
+/frontend/.gatsby
+.yarn-integrity
+
 # IDE and Editor files
 .idea/
 .vscode/
@@ -13,11 +92,6 @@
 *.log
 logs/
 log/
-
-# Dependencies
-node_modules/
-venv/
-__pycache__/
 
 # Build outputs
 dist/
