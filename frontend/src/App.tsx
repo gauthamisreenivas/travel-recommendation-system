@@ -12,7 +12,11 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return <Container className="text-center py-4">Loading...</Container>;
+  }
   
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
