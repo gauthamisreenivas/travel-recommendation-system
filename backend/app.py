@@ -48,6 +48,55 @@ HOTEL_IMAGES = [
     # Add more unique hotel images here...
 ]
 
+# User ratings and reviews data structure
+RATINGS_AND_REVIEWS = [
+    {
+        "id": str(uuid.uuid4()),
+        "hotel_id": "1",
+        "user_id": "user1",
+        "user_name": "John Smith",
+        "rating": 4.5,
+        "review": "Excellent service and beautiful rooms. The breakfast was amazing!",
+        "date": "2024-02-15"
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "hotel_id": "1",
+        "user_id": "user2",
+        "user_name": "Emma Wilson",
+        "rating": 5.0,
+        "review": "Perfect stay! The staff was incredibly helpful and the facilities are top-notch.",
+        "date": "2024-02-20"
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "hotel_id": "2",
+        "user_id": "user3",
+        "user_name": "Michael Brown",
+        "rating": 4.0,
+        "review": "Great location and comfortable rooms. Could improve the Wi-Fi speed.",
+        "date": "2024-02-18"
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "hotel_id": "2",
+        "user_id": "user4",
+        "user_name": "Sarah Davis",
+        "rating": 4.8,
+        "review": "Stunning views and exceptional service. Will definitely come back!",
+        "date": "2024-02-22"
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "hotel_id": "3",
+        "user_id": "user5",
+        "user_name": "David Miller",
+        "rating": 3.5,
+        "review": "Decent stay but the rooms need updating. Good value for the price.",
+        "date": "2024-02-10"
+    }
+]
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -699,6 +748,130 @@ def get_locations():
     except Exception as e:
         app.logger.error(f"Error in get_locations: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+# Add more ratings for each hotel
+def generate_hotel_ratings(hotel_id, base_rating, num_reviews=5):
+    reviews = []
+    names = ["Alice Johnson", "Bob Wilson", "Carol Martinez", "Daniel Lee", "Eva Chen", 
+             "Frank Taylor", "Grace Kim", "Henry Patel", "Isla Brown", "Jack Thompson"]
+    review_texts = [
+        "Absolutely loved my stay! The {amenity} was exceptional.",
+        "Great experience overall. {amenity} could use some improvement.",
+        "Wonderful hotel with amazing {amenity}. Staff was very helpful.",
+        "Decent stay, but {amenity} exceeded expectations.",
+        "Really impressed with the {amenity}. Will return!",
+        "Good value for money. {amenity} was a highlight.",
+        "Pleasant stay with excellent {amenity}.",
+        "Above average experience. {amenity} needs updating.",
+        "Fantastic hotel! {amenity} was world-class.",
+        "Enjoyed my time here. {amenity} was particularly good."
+    ]
+    amenities = ["pool", "restaurant", "spa", "gym", "room service", "breakfast", "bar", "concierge service"]
+    
+    for i in range(num_reviews):
+        # Generate a rating that varies around the base rating
+        variation = (uuid.uuid4().int % 10 - 5) / 10  # Random variation between -0.5 and 0.5
+        rating = min(max(base_rating + variation, 1), 5)  # Keep rating between 1 and 5
+        
+        reviews.append({
+            "id": str(uuid.uuid4()),
+            "hotel_id": hotel_id,
+            "user_id": f"user_{uuid.uuid4().hex[:8]}",
+            "user_name": names[i % len(names)],
+            "rating": round(rating, 1),
+            "review": review_texts[i % len(review_texts)].format(
+                amenity=amenities[i % len(amenities)]
+            ),
+            "date": (datetime.now() - timedelta(days=i * 3)).strftime("%Y-%m-%d")
+        })
+    
+    return reviews
+
+# Hotel seed data
+HOTELS = [
+    {
+        "id": "1",
+        "name": "Luxury Grand Hotel",
+        "location": "New York",
+        "description": "Experience luxury at its finest in the heart of Manhattan.",
+        "image_url": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
+        "average_rating": 4.7,
+        "price_range": "$$$$",
+        "amenities": ["pool", "spa", "gym", "restaurant", "bar", "wifi", "parking"],
+        "room_types": [
+            {
+                "id": "deluxe-d125b58a",
+                "name": "Deluxe Room",
+                "description": "Spacious room with city view",
+                "price_per_night": 350,
+                "capacity": 2,
+                "amenities": ["wifi", "minibar", "room-service"],
+                "image_url": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b"
+            },
+            {
+                "id": "suite-s789c12d",
+                "name": "Executive Suite",
+                "description": "Luxury suite with separate living area",
+                "price_per_night": 550,
+                "capacity": 3,
+                "amenities": ["wifi", "minibar", "room-service", "jacuzzi"],
+                "image_url": "https://images.unsplash.com/photo-1590073242678-70ee3fc28f8a"
+            }
+        ],
+        "reviews": []  # Will be populated with generated reviews
+    },
+    {
+        "id": "2",
+        "name": "Seaside Resort",
+        "location": "Miami",
+        "description": "Beachfront paradise with stunning ocean views.",
+        "image_url": "https://images.unsplash.com/photo-1564501049412-61c2a3083791",
+        "average_rating": 4.5,
+        "price_range": "$$$",
+        "amenities": ["beach", "pool", "spa", "restaurant", "wifi", "parking"],
+        "room_types": [
+            {
+                "id": "ocean-o456e78f",
+                "name": "Ocean View Room",
+                "description": "Room with beautiful ocean views",
+                "price_per_night": 280,
+                "capacity": 2,
+                "amenities": ["wifi", "balcony", "room-service"],
+                "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945"
+            }
+        ],
+        "reviews": []
+    },
+    {
+        "id": "3",
+        "name": "Mountain Lodge",
+        "location": "Denver",
+        "description": "Cozy retreat in the Rocky Mountains.",
+        "image_url": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7",
+        "average_rating": 4.3,
+        "price_range": "$$",
+        "amenities": ["fireplace", "hiking", "restaurant", "wifi", "parking"],
+        "room_types": [
+            {
+                "id": "lodge-l901h23i",
+                "name": "Lodge Room",
+                "description": "Rustic room with mountain view",
+                "price_per_night": 200,
+                "capacity": 2,
+                "amenities": ["wifi", "fireplace", "room-service"],
+                "image_url": "https://images.unsplash.com/photo-1518733057094-95b53143d2a7"
+            }
+        ],
+        "reviews": []
+    }
+]
+
+# Generate and add reviews for each hotel
+for hotel in HOTELS:
+    hotel["reviews"] = generate_hotel_ratings(hotel["id"], hotel["average_rating"])
+    # Recalculate average rating based on generated reviews
+    if hotel["reviews"]:
+        hotel["average_rating"] = round(sum(r["rating"] for r in hotel["reviews"]) / len(hotel["reviews"]), 1)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001) 
