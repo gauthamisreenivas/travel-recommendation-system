@@ -17,8 +17,7 @@ import uuid
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # This enables CORS for all routes with no restrictions
-
+CORS(app)  # Enable CORS for all routes
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
 
 # MongoDB connection
@@ -875,4 +874,4 @@ for hotel in HOTELS:
         hotel["average_rating"] = round(sum(r["rating"] for r in hotel["reviews"]) / len(hotel["reviews"]), 1)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) 
+    app.run(debug=True, port=5001) 

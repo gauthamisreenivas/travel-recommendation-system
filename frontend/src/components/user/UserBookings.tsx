@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+import axios from 'axios';
 import { Booking, Hotel } from '../../types';
 import { format } from 'date-fns';
 
@@ -19,7 +19,7 @@ const UserBookings: React.FC = () => {
                     return;
                 }
 
-                const response = await api.get('/bookings', {
+                const response = await axios.get('http://127.0.0.1:5000/bookings', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -48,7 +48,7 @@ const UserBookings: React.FC = () => {
     const handleCancelBooking = async (bookingId: string) => {
         try {
             const token = localStorage.getItem('token');
-            await api.post(`/bookings/${bookingId}/cancel`, {}, {
+            await axios.post(`http://127.0.0.1:5000/bookings/${bookingId}/cancel`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

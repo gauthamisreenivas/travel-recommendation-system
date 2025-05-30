@@ -9,7 +9,6 @@ import BookingForm from './components/BookingForm';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import api from './services/api';
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -32,9 +31,13 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await api.get('/hotels');
-        setAllHotels(response.data);
-        setSearchResults(response.data); // Initially show all hotels
+        const response = await fetch('/hotels');
+        if (!response.ok) {
+          throw new Error('Failed to fetch hotels');
+        }
+        const data = await response.json();
+        setAllHotels(data);
+        setSearchResults(data); // Initially show all hotels
       } catch (err) {
         console.error('Error fetching hotels:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch hotels');

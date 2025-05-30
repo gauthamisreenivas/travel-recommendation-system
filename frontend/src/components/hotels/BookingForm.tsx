@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BookingFormProps } from '../../types';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import api from '../../services/api';
+import axios from 'axios';
 
 const BookingForm: React.FC<BookingFormProps> = ({ hotel, roomType, onSubmit }) => {
     const [checkIn, setCheckIn] = useState<Date | null>(null);
@@ -39,7 +39,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ hotel, roomType, onSubmit }) 
                 totalPrice: calculateTotalPrice()
             };
 
-            const response = await api.post('/bookings', bookingData, {
+            const response = await axios.post('http://127.0.0.1:5000/bookings', bookingData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

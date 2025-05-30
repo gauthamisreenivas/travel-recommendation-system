@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+import axios from 'axios';
 import { RegisterData } from '../../types';
 
 const Register: React.FC = () => {
@@ -27,7 +27,7 @@ const Register: React.FC = () => {
         }
 
         try {
-            const response = await api.post('/auth/register', {
+            const response = await axios.post('http://127.0.0.1:5000/auth/register', {
                 email: formData.email,
                 password: formData.password,
                 firstName: formData.firstName,
