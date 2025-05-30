@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Hotel, RoomAvailability, RoomType } from '../types';
@@ -24,7 +24,7 @@ const HotelDetail: React.FC = () => {
     useEffect(() => {
         const fetchHotelDetails = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/hotels/${id}`);
+                const response = await api.get(`/hotels/${id}`);
                 setHotel(response.data);
             } catch (err: any) {
                 setError(err.response?.data?.message || 'Failed to fetch hotel details');
@@ -41,7 +41,7 @@ const HotelDetail: React.FC = () => {
             if (!checkIn || !checkOut) return;
 
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/hotels/${id}/availability`, {
+                const response = await api.get(`/hotels/${id}/availability`, {
                     params: {
                         start_date: checkIn.toISOString(),
                         end_date: checkOut.toISOString()
@@ -95,7 +95,7 @@ const HotelDetail: React.FC = () => {
 
             console.log('Sending booking request:', bookingData);
 
-            const response = await axios.post('http://127.0.0.1:5000/bookings', bookingData, {
+            const response = await api.post('/bookings', bookingData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
