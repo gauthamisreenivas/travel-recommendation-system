@@ -4,19 +4,19 @@ An intelligent hotel recommendation platform that provides users with personaliz
 🚀 Features
 🔍 Personalized Recommendations
 
-Content-based filtering
+  Content-based filtering
 
-Collaborative filtering
+  Collaborative filtering
 
-Hybrid filtering
+  Hybrid filtering
 
 🖥️ Frontend
 
-Built with TypeScript, React, and Tailwind CSS
+  Built with TypeScript, React, and Tailwind CSS
 
-Displays hotel cards with images, ratings, and names
+  Displays hotel cards with images, ratings, and names
 
-Clean, intuitive interface inspired by GoHub UI templates
+  Clean, intuitive interface inspired by GoHub UI templates
 
 🧠 Backend
 
@@ -35,6 +35,8 @@ Edit
 ├── .gitignore
 ├── .gitattributes
 └── README.md
+
+
 🛠️ Getting Started
 1. Clone the repository
 bash
@@ -42,14 +44,17 @@ Copy
 Edit
 git clone https://github.com/gauthamisreenivas/travel-recommendation-system.git
 cd travel-recommendation-system
-2. Start the backend
+
+3. Start the backend
 bash
 Copy
 Edit
 cd backend
+
 # (If using Flask)
 pip install -r requirements.txt
 python app.py
+
 3. Start the frontend
 bash
 Copy
